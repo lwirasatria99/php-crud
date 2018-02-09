@@ -2,18 +2,18 @@
 require 'database.php';
 
    $id = null;
-   if ( !empty($_GET['id'])) {
+   if (!empty($_GET['id'])) {
        $id = $_REQUEST['id'];
    }
     
-   if ( null==$id ) {
+   if (null == $id) {
        header("Location: index.php");
    }
     
-   if ( !empty($_POST)) {
+   if (!empty($_POST)) {
        // keep track validation errors
-       $nameError = null;
-       $emailError = null;
+       $nameError   = null;
+       $emailError  = null;
        $mobileError = null;
         
        // keep track post values
@@ -24,16 +24,16 @@ require 'database.php';
        // validate input
        $valid = true;
        if (empty($name)) {
-           $nameError = 'Please enter Name';
-           $valid = false;
+           $nameError  = 'Please enter Name';
+           $valid      = false;
        }
         
        if (empty($email)) {
            $emailError = 'Please enter Email Address';
-           $valid = false;
+           $valid      = false;
        } else if ( !filter_var($email,FILTER_VALIDATE_EMAIL) ) {
            $emailError = 'Please enter a valid Email Address';
-           $valid = false;
+           $valid      = false;
        }
         
        if (empty($mobile)) {
@@ -43,9 +43,9 @@ require 'database.php';
 
        // Update Data
        if ($valid) {
-           $pdo = Database::connect();
+           $pdo   = Database::connect();
            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-           $sql = "UPDATE customers SET name = ?, email = ?, mobile = ? WHERE id = ?";
+           $sql   = "UPDATE customers SET name = ?, email = ?, mobile = ? WHERE id = ?";
            $query = $pdo->prepare($sql);
            $query->execute(array($name, $email, $mobile, $id));
            Database::disconnect();
